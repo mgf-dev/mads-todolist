@@ -7,6 +7,30 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 </head>
 
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">ToDoList</a>
+    <div id="navbarPrincipal">
+        <ul class="navbar-nav ml-auto d-flex flex-row">
+            <li class="nav-item p-2">
+                <a class="nav-link" href="/about">ToDoList</a>
+            </li>
+            <li class="nav-item p-2" th:if="${session.idUsuarioLogeado != null}">
+                <a class="nav-link" th:href="@{/usuarios/{id}/tareas(id=${session.idUsuarioLogeado})}">Tareas</a>
+            </li>
+            <li class="nav-item p-2">
+                <select>
+                    <option>
+                        <a>Cuenta</a>
+                    </option>
+                    <option>
+                        <a>Cerrar sesión</a>
+                    </option>
+                </select>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 <div th:fragment="javascript">
     <script th:src="@{/js/jquery.min.js}"></script>
     <script th:src="@{/js/popper.min.js}"></script>
