@@ -10,20 +10,24 @@ Necesitas tener instalado en tu sistema:
 
 ## Ejecución
 
-Puedes ejecutar la aplicación usando el _goal_ `run` del _plugin_ Maven 
+Puedes ejecutar la aplicación usando el _goal_ `run` del _plugin_ Maven
 de Spring Boot:
 
 ```
-$ ./mvnw spring-boot:run 
-```   
+$ ./mvnw spring-boot:run
+```
 
 También puedes generar un `jar` y ejecutarlo:
 
 ```
 $ ./mvnw package
-$ java -jar target/mads-todolist-inicial-0.0.1-SNAPSHOT.jar 
+$ java -jar target/mads-todolist-inicial-0.0.1-SNAPSHOT.jar
 ```
 
 Una vez lanzada la aplicación puedes abrir un navegador y probar la página de inicio:
 
 - [http://localhost:8080/login](http://localhost:8080/login)
+
+## Trello
+
+https://trello.com/invite/b/6abcd9b1f772e32cfff9f14f/ATTIdda3270597c5dd12aa8f7c5a7571a75e114023B7/mads-todolist
