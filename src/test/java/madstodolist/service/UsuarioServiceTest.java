@@ -153,4 +153,28 @@ public class UsuarioServiceTest {
         assertThat(usuario.getEmail()).isEqualTo("user@ua");
         assertThat(usuario.getNombre()).isEqualTo("Usuario Ejemplo");
     }
+
+    @Test
+    public void servicioFindAllDevuelveTodosUsuarios() {
+        // GIVEN
+        // Sin usuarios inicialmente
+        java.util.List<UsuarioData> listaVacia = usuarioService.findAll();
+        assertThat(listaVacia).isEmpty();
+
+        // WHEN
+        // Añadimos varios usuarios
+        addUsuarioBD();
+        UsuarioData usuario2 = new UsuarioData();
+        usuario2.setEmail("user2@ua");
+        usuario2.setNombre("Usuario 2");
+        usuario2.setPassword("123");
+        usuarioService.registrar(usuario2);
+
+        // THEN
+        // findAll devuelve todos los usuarios
+        java.util.List<UsuarioData> lista = usuarioService.findAll();
+        assertThat(lista.size()).isEqualTo(2);
+        assertThat(lista.stream().anyMatch(u -> u.getEmail().equals("user@ua"))).isTrue();
+        assertThat(lista.stream().anyMatch(u -> u.getEmail().equals("user2@ua"))).isTrue();
+    }
 }
