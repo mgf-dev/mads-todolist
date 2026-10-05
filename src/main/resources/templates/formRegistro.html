@@ -38,6 +38,10 @@
                             <input id="fechaNacimiento" class="form-control" name="fechaNacimiento"
                                    placeholder="01-12-2019" th:field="*{fechaNacimiento}"/>
                         </div>
+                        <div class="form-group">
+                            <label for="esAdmin">Registrarse como administrador</label>
+                            <input id="esAdmin" type="checkbox" class="form-control" name="esAdmin" th:field="*{esAdmin}"/>
+                        </div>
 
                         <button type="submit" class="btn btn-primary">Registro</button>
                         <a class="btn btn-link" href="/login">Ir a login</a>
