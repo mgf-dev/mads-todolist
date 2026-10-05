@@ -72,4 +72,14 @@ public class UsuarioService {
             return modelMapper.map(usuario, UsuarioData.class);
         }
     }
+
+    @Transactional(readOnly = true)
+    public java.util.List<UsuarioData> findAll() {
+        java.util.List<Usuario> usuarios = (java.util.List<Usuario>) usuarioRepository.findAll();
+        java.util.List<UsuarioData> usuariosData = new java.util.ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            usuariosData.add(modelMapper.map(usuario, UsuarioData.class));
+        }
+        return usuariosData;
+    }
 }
