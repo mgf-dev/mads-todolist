@@ -89,7 +89,6 @@ public class UsuarioServiceTest {
         });
     }
 
-
     @Test
     public void servicioRegistroUsuarioExcepcionConEmailRepetido() {
         // GIVEN
@@ -114,7 +113,8 @@ public class UsuarioServiceTest {
     public void servicioRegistroUsuarioDevuelveUsuarioConId() {
 
         // WHEN
-        // Si registramos en el sistema un usuario con un e-mail no existente en la base de datos,
+        // Si registramos en el sistema un usuario con un e-mail no existente en la base
+        // de datos,
         // y un password no nulo,
 
         UsuarioData usuario = new UsuarioData();
@@ -195,5 +195,18 @@ public class UsuarioServiceTest {
         usuarioService.registrar(admin);
 
         assertThat(usuarioService.existeAdministrador()).isTrue();
+    }
+
+    @Test
+    public void loginUsuarioBloqueadoDevuelveUserBlocked() {
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("bloqueado@ua");
+        usuario.setNombre("Bloqueado");
+        usuario.setPassword("123");
+        usuario.setBloqueado(true);
+        usuarioService.registrar(usuario);
+
+        UsuarioService.LoginStatus status = usuarioService.login("bloqueado@ua", "123");
+        assertThat(status).isEqualTo(UsuarioService.LoginStatus.USER_BLOCKED);
     }
 }
