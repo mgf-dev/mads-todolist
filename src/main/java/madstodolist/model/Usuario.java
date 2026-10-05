@@ -22,6 +22,7 @@ public class Usuario implements Serializable {
     private String nombre;
     private String password;
     private boolean esAdmin;
+    private boolean bloqueado;
     @Column(name = "fecha_nacimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
@@ -90,6 +91,14 @@ public class Usuario implements Serializable {
 
     public boolean getEsAdmin() {
         return esAdmin;
+    }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
     }
 
     // Getters y setters de la relación

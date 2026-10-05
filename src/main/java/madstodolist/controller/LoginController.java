@@ -49,6 +49,8 @@ public class LoginController {
             session.setAttribute("nombreUsuario", usuario.getNombre());
 
             return "redirect:/usuarios/" + usuario.getId() + "/tareas";
+        } else if (loginStatus == UsuarioService.LoginStatus.USER_BLOCKED) {
+            return "redirect:/blocked";
         } else if (loginStatus == UsuarioService.LoginStatus.USER_NOT_FOUND) {
             model.addAttribute("error", "No existe usuario");
             return "formLogin";
@@ -104,5 +106,10 @@ public class LoginController {
     public String logout(HttpSession session) {
         managerUserSession.logout();
         return "redirect:/login";
+    }
+
+    @GetMapping("/blocked")
+    public String blocked() {
+        return "blocked";
     }
 }

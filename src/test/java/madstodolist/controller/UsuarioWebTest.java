@@ -110,4 +110,16 @@ public class UsuarioWebTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("Registrarse como administrador")));
     }
+
+    @Test
+    public void usuarioBloqueadoRedirigeABloqueado() throws Exception {
+        when(usuarioService.login("bloqueado@ua", "123"))
+                .thenReturn(UsuarioService.LoginStatus.USER_BLOCKED);
+
+        this.mockMvc.perform(post("/login")
+                        .param("eMail", "bloqueado@ua")
+                        .param("password", "123"))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/blocked"));
+    }
 }
