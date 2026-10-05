@@ -1,5 +1,6 @@
 package madstodolist.controller;
 
+import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.UsuarioData;
 import madstodolist.service.UsuarioService;
 import org.junit.jupiter.api.Test;
@@ -25,8 +26,16 @@ public class ListadoControllerTest {
     @MockBean
     private UsuarioService usuarioService;
 
+    @MockBean
+    private ManagerUserSession managerUserSession;
+
     @Test
     public void listadoDevuelveVistaListadoRegistrados() throws Exception {
+        UsuarioData admin = new UsuarioData();
+        admin.setId(1L);
+        admin.setEsAdmin(true);
+        when(managerUserSession.usuarioLogeado()).thenReturn(1L);
+        when(usuarioService.findById(1L)).thenReturn(admin);
         when(usuarioService.findAll()).thenReturn(new ArrayList<>());
         this.mockMvc.perform(get("/registrados"))
                 .andExpect(status().isOk())
@@ -35,6 +44,12 @@ public class ListadoControllerTest {
 
     @Test
     public void listadoMuestraListaUsuariosEnModelo() throws Exception {
+        UsuarioData admin = new UsuarioData();
+        admin.setId(1L);
+        admin.setEsAdmin(true);
+        when(managerUserSession.usuarioLogeado()).thenReturn(1L);
+        when(usuarioService.findById(1L)).thenReturn(admin);
+
         List<UsuarioData> usuarios = new ArrayList<>();
         UsuarioData u1 = new UsuarioData();
         u1.setId(1L);
@@ -57,6 +72,12 @@ public class ListadoControllerTest {
 
     @Test
     public void descripcionDevuelveVistaDescripcionUsuario() throws Exception {
+        UsuarioData admin = new UsuarioData();
+        admin.setId(99L);
+        admin.setEsAdmin(true);
+        when(managerUserSession.usuarioLogeado()).thenReturn(99L);
+        when(usuarioService.findById(99L)).thenReturn(admin);
+
         UsuarioData usuario = new UsuarioData();
         usuario.setId(1L);
         usuario.setEmail("test@ua");
