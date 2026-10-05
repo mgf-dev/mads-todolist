@@ -93,4 +93,31 @@ public class UsuarioService {
         }
         return false;
     }
+
+    @Transactional
+    public UsuarioData bloquearUsuario(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) return null;
+        usuario.setBloqueado(true);
+        usuario = usuarioRepository.save(usuario);
+        return modelMapper.map(usuario, UsuarioData.class);
+    }
+
+    @Transactional
+    public UsuarioData desbloquearUsuario(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) return null;
+        usuario.setBloqueado(false);
+        usuario = usuarioRepository.save(usuario);
+        return modelMapper.map(usuario, UsuarioData.class);
+    }
+
+    @Transactional
+    public UsuarioData cambiarEstadoBloqueo(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario == null) return null;
+        usuario.setBloqueado(!usuario.isBloqueado());
+        usuario = usuarioRepository.save(usuario);
+        return modelMapper.map(usuario, UsuarioData.class);
+    }
 }

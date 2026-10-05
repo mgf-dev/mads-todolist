@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
@@ -48,5 +49,13 @@ public class ListadoController {
         UsuarioData usuario = usuarioService.findById(idUsuario);
         model.addAttribute("usuario", usuario);
         return "descripcionUsuario";
+    }
+
+    @PostMapping("/registrados/{id}/bloquear")
+    public String cambiarBloqueo(@PathVariable(value = "id") Long idUsuario, Model model) {
+        if (!comprobarAdmin())
+            return "forbidden";
+        usuarioService.cambiarEstadoBloqueo(idUsuario);
+        return "redirect:/registrados";
     }
 }
