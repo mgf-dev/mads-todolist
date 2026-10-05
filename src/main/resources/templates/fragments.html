@@ -9,7 +9,7 @@
 
 <nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">ToDoList</a>
-    <div id="navbarPrincipal">
+    <div id="navbarPrincipal" class="ml-auto">
         <ul class="navbar-nav ml-auto d-flex flex-row">
             <li class="nav-item p-2">
                 <a class="nav-link" href="/about">ToDoList</a>
@@ -17,15 +17,16 @@
             <li class="nav-item p-2" th:if="${session.idUsuarioLogeado != null}">
                 <a class="nav-link" th:href="@{/usuarios/{id}/tareas(id=${session.idUsuarioLogeado})}">Tareas</a>
             </li>
-            <li class="nav-item p-2">
-                <select>
-                    <option>
-                        <a>Cuenta</a>
-                    </option>
-                    <option>
-                        <a>Cerrar sesión</a>
-                    </option>
-                </select>
+            <li class="nav-item dropdown p-2" th:if="${session.idUsuarioLogeado != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="cuentaDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                    Cuenta
+                    <span th:if="${usuarioLogeado?.nombre}" th:text="' (' + ${usuarioLogeado.nombre} + ')'"></span>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cuentaDropdown">
+                    <li>
+                        <a class="dropdown-item" th:href="@{/logout}">Cerrar sesión</a>
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
