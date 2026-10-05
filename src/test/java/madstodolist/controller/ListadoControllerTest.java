@@ -54,4 +54,19 @@ public class ListadoControllerTest {
                 .andExpect(model().attribute("usuarios", hasItem(hasProperty("email", is("u1@ua")))))
                 .andExpect(model().attribute("usuarios", hasItem(hasProperty("email", is("u2@ua")))));
     }
+
+    @Test
+    public void descripcionDevuelveVistaDescripcionUsuario() throws Exception {
+        UsuarioData usuario = new UsuarioData();
+        usuario.setId(1L);
+        usuario.setEmail("test@ua");
+        usuario.setNombre("Test Usuario");
+        when(usuarioService.findById(1L)).thenReturn(usuario);
+
+        this.mockMvc.perform(get("/registrados/1"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("descripcionUsuario"))
+                .andExpect(model().attributeExists("usuario"))
+                .andExpect(model().attribute("usuario", hasProperty("email", is("test@ua"))));
+    }
 }
