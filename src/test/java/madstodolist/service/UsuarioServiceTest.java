@@ -177,4 +177,23 @@ public class UsuarioServiceTest {
         assertThat(lista.stream().anyMatch(u -> u.getEmail().equals("user@ua"))).isTrue();
         assertThat(lista.stream().anyMatch(u -> u.getEmail().equals("user2@ua"))).isTrue();
     }
+
+    @Test
+    public void existeAdministradorDevuelveFalseSiNoHayAdmin() {
+        java.util.List<UsuarioData> lista = usuarioService.findAll();
+        assertThat(usuarioService.existeAdministrador()).isFalse();
+    }
+
+    @Test
+    public void existeAdministradorDevuelveTrueSiHayAdmin() {
+        addUsuarioBD();
+        UsuarioData admin = new UsuarioData();
+        admin.setEmail("admin@ua");
+        admin.setNombre("Admin");
+        admin.setPassword("123");
+        admin.setEsAdmin(true);
+        usuarioService.registrar(admin);
+
+        assertThat(usuarioService.existeAdministrador()).isTrue();
+    }
 }
