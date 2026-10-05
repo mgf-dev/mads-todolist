@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head (titulo='Usuario bloqueado')"></head>
+
+<body class="m-5">
+    <h1>Usuario bloqueado</h1>
+    <p>Tu cuenta ha sido bloqueada por el administrador.</p>
+    <a th:href="@{/login}">Volver al login</a>
+
+    <div th:replace="fragments::javascript"/>
+</body>
+</html>
