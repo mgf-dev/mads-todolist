@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head (titulo='No autorizado')"></head>
+
+<body class="m-5">
+    <h1>403 - No autorizado</h1>
+    <p>Este sitio es exclusivo para el usuario administrador de la página.</p>
+    <a th:href="@{/}">Volver</a>
+
+    <div th:replace="fragments::javascript"/>
+</body>
+</html>
