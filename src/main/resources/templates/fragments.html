@@ -20,7 +20,7 @@
             <li class="nav-item dropdown p-2" th:if="${session.idUsuarioLogeado != null}">
                 <a class="nav-link dropdown-toggle" href="#" id="cuentaDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                     Cuenta
-                    <span th:if="${usuarioLogeado?.nombre}" th:text="' (' + ${usuarioLogeado.nombre} + ')'"></span>
+                    <span th:if="${session.nombreUsuario}" th:text="' (' + ${session.nombreUsuario} + ')'"></span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="cuentaDropdown">
                     <li>
