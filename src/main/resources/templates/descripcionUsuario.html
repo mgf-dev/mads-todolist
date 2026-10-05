@@ -10,6 +10,23 @@
 <div class="container-fluid">
     <h1>Descripción del usuario</h1>
 
+    <div class="card">
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-3">Identificador</dt>
+                <dd class="col-sm-9" th:text="${usuario.id}"></dd>
+
+                <dt class="col-sm-3">Correo electrónico</dt>
+                <dd class="col-sm-9" th:text="${usuario.email}"></dd>
+
+                <dt class="col-sm-3">Nombre</dt>
+                <dd class="col-sm-9" th:text="${usuario.nombre}"></dd>
+
+                <dt class="col-sm-3">Fecha de nacimiento</dt>
+                <dd class="col-sm-9" th:text="${usuario.fechaNacimiento}"></dd>
+            </dl>
+        </div>
+    </div>
 </div>
 
 <div th:replace="fragments::javascript"/>
