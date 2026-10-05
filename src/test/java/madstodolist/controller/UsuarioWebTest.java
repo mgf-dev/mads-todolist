@@ -93,4 +93,21 @@ public class UsuarioWebTest {
                         .param("password","000"))
                 .andExpect(content().string(containsString("Contraseña incorrecta")));
     }
+
+    @Test
+    public void registroFormNoMuestraAdminSiYaExiste() throws Exception {
+        when(usuarioService.existeAdministrador()).thenReturn(true);
+        this.mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/registro"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Registro nuevo usuario")))
+                .andExpect(content().string(org.hamcrest.Matchers.not(containsString("Registrarse como administrador"))));
+    }
+
+    @Test
+    public void registroFormMuestraAdminSiNoExiste() throws Exception {
+        when(usuarioService.existeAdministrador()).thenReturn(false);
+        this.mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get("/registro"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Registrarse como administrador")));
+    }
 }
