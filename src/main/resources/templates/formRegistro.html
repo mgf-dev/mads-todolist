@@ -38,7 +38,7 @@
                             <input id="fechaNacimiento" class="form-control" name="fechaNacimiento"
                                    placeholder="01-12-2019" th:field="*{fechaNacimiento}"/>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group" th:if="${!existeAdmin}">
                             <label for="esAdmin">Registrarse como administrador</label>
                             <input id="esAdmin" type="checkbox" class="form-control" name="esAdmin" th:field="*{esAdmin}"/>
                         </div>

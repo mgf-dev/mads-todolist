@@ -62,6 +62,7 @@ public class LoginController {
     @GetMapping("/registro")
     public String registroForm(Model model) {
         model.addAttribute("registroData", new RegistroData());
+        model.addAttribute("existeAdmin", usuarioService.existeAdministrador());
         return "formRegistro";
     }
 
@@ -69,12 +70,18 @@ public class LoginController {
     public String registroSubmit(@Valid RegistroData registroData, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
+            if (usuarioService.existeAdministrador()) {
+                model.addAttribute("existeAdmin", true);
+            }
             return "formRegistro";
         }
 
         if (usuarioService.findByEmail(registroData.getEmail()) != null) {
             model.addAttribute("registroData", registroData);
             model.addAttribute("error", "El usuario " + registroData.getEmail() + " ya existe");
+            if (usuarioService.existeAdministrador()) {
+                model.addAttribute("existeAdmin", true);
+            }
             return "formRegistro";
         }
 
@@ -83,6 +90,11 @@ public class LoginController {
         usuario.setPassword(registroData.getPassword());
         usuario.setFechaNacimiento(registroData.getFechaNacimiento());
         usuario.setNombre(registroData.getNombre());
+        usuario.setEsAdmin(registroData.getEsAdmin());
+
+        if (usuarioService.existeAdministrador() && usuario.getEsAdmin()) {
+            usuario.setEsAdmin(false);
+        }
 
         usuarioService.registrar(usuario);
         return "redirect:/login";
