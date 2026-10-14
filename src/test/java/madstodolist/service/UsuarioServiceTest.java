@@ -194,7 +194,7 @@ public class UsuarioServiceTest {
         admin.setEsAdmin(true);
         usuarioService.registrar(admin);
 
-        assertThat(usuarioService.existeAdministrador()).isFalse();
+        assertThat(usuarioService.existeAdministrador()).isTrue();
     }
 
     @Test
