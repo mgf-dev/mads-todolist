@@ -180,7 +180,7 @@ public class UsuarioServiceTest {
 
     @Test
     public void existeAdministradorDevuelveFalseSiNoHayAdmin() {
-        java.util.List<UsuarioData> lista = usuarioService.findAll();
+        usuarioService.findAll();
         assertThat(usuarioService.existeAdministrador()).isFalse();
     }
 
