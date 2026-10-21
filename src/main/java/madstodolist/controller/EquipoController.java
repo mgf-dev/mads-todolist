@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import madstodolist.service.EquipoService;
-import madstodolist.dto.EquipoData;
+import madstodolist.dto.*;
 
 @Controller
 public class EquipoController {
@@ -21,5 +22,12 @@ public class EquipoController {
         List<EquipoData> equipos = equipoService.obtenerEquipos();
         model.addAttribute("equipos", equipos);
         return "equipos";
+    }
+
+    @GetMapping("/equipos/{id}")
+    public String detallesEquipo(@PathVariable(value = "id") Long idEquipo, Model model) {
+        List<UsuarioData> usuariosEnEquipo = equipoService.usuariosEquipo(idEquipo);
+        model.addAttribute("usuarios", usuariosEnEquipo);
+        return "detallesEquipo";
     }
 }

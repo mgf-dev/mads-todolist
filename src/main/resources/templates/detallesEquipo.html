@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: head (titulo='Detalles del equipo')"></head>
+
+<body>
+
+<div th:replace="fragments :: navbar"></div>
+
+<div class="container-fluid">
+    <h1>Usuarios del equipo</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <dl class="row">
+                <ul th:each="usuario : ${usuarios}">
+                    <li th:text="${usuario.nombre}"></li>
+                </ul>
+            </dl>
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments::javascript"/>
+
+</body>
+</html>
