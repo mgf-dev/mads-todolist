@@ -25,6 +25,12 @@ public class EquipoService {
     private ModelMapper modelMapper;
 
     @Transactional
+    public List<EquipoData> obtenerEquipos() {
+        List<Equipo> equipos = equipoRepository.findAll();
+        return equipos.stream().map(equipo -> modelMapper.map(equipo, EquipoData.class)).collect(Collectors.toList());
+    }
+
+    @Transactional
     public EquipoData crearEquipo(String nombre) {
         Equipo equipo = new Equipo(nombre);
         equipoRepository.save(equipo);
