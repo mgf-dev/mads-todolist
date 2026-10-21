@@ -9,6 +9,9 @@ import madstodolist.model.Equipo;
 import madstodolist.model.Usuario;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -107,6 +110,21 @@ public class EquipoTest {
         assertThat(equipo.getUsuarios()).contains(usuario);
         assertThat(usuario.getEquipos()).hasSize(1);
         assertThat(usuario.getEquipos()).contains(equipo);
+    }
+
+    @Test
+    @Transactional
+    public void comprobarFindAll() {
+        // GIVEN
+        // Dos equipos en la base de datos
+        equipoRepository.save(new Equipo("Proyecto 2"));
+        equipoRepository.save(new Equipo("Proyecto 3"));
+
+        // WHEN
+        List<Equipo> equipos = equipoRepository.findAll();
+
+        // THEN
+        assertThat(equipos).hasSize(2);
     }
 
 }
