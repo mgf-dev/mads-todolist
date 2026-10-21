@@ -19,7 +19,7 @@ public class EquipoController {
 
     @GetMapping("/equipos")
     public String equipos(Model model) {
-        List<EquipoData> equipos = new ArrayList<>(); // equipoService.findAll();
+        List<EquipoData> equipos = equipoService.obtenerEquipos();
         model.addAttribute("equipos", equipos);
         return "equipos";
     }

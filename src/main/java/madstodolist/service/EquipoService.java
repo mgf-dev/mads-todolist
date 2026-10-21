@@ -5,6 +5,7 @@ import madstodolist.model.*;
 import madstodolist.repository.*;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,12 @@ public class EquipoService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Transactional
+    public List<EquipoData> obtenerEquipos() {
+        List<Equipo> equipos = equipoRepository.findAll();
+        return equipos.stream().map(equipo -> modelMapper.map(equipo, EquipoData.class)).collect(Collectors.toList());
+    }
 
     @Transactional
     public EquipoData crearEquipo(String nombre) {
