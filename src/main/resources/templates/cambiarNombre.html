@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments :: head (titulo='Acerca de')"></head>
+
+<body>
+
+<div th:replace="fragments :: navbar"></div>
+
+<div class="container-fluid">
+    <h1>Cambiar nombre de equipo</h1>
+    <form method="post" th:action="@{/equipos/{id}/cambiarNombre(id=${equipoId})}" th:object="${equipoData}">
+        <input type="text" placeholder="Nuevo nombre" th:field="*{nombre}"/>
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<div th:replace="fragments::javascript"/>
+
+</body>
+</html>
