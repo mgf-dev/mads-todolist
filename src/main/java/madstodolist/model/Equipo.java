@@ -40,6 +40,10 @@ public class Equipo implements Serializable {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public Long getId() {
         return id;
     }
