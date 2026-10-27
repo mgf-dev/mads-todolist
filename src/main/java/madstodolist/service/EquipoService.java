@@ -37,6 +37,18 @@ public class EquipoService {
         return modelMapper.map(equipo, EquipoData.class);
     }
 
+    @Transactional
+    public void borrarEquipo(Long id) {
+        equipoRepository.deleteById(id);
+    }
+
+    public EquipoData cambiarNombre(Long id, String nombre) {
+        Equipo equipo = equipoRepository.findById(id).orElse(null);
+        equipo.setNombre(nombre);
+        equipoRepository.save(equipo);
+        return modelMapper.map(equipo, EquipoData.class);
+    }
+
     @Transactional(readOnly = true)
     public EquipoData recuperarEquipo(Long id) {
         Equipo e = equipoRepository.findById(id).orElse(null);

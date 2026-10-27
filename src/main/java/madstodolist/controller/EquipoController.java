@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import madstodolist.service.EquipoService;
+import madstodolist.service.*;
 import madstodolist.authentication.ManagerUserSession;
 import madstodolist.dto.*;
 
@@ -21,12 +21,16 @@ public class EquipoController {
     EquipoService equipoService;
 
     @Autowired
+    UsuarioService usuarioService;
+
+    @Autowired
     ManagerUserSession managerUserSession;
 
     @GetMapping("/equipos")
     public String equipos(Model model) {
         List<EquipoData> equipos = equipoService.obtenerEquipos();
         Long idUsuario = managerUserSession.usuarioLogeado();
+        model.addAttribute("esAdmin", usuarioService.findById(idUsuario).getEsAdmin());
         model.addAttribute("usuarioLogueado", idUsuario);
         model.addAttribute("equipos", equipos);
         if (idUsuario != null) {
@@ -61,6 +65,28 @@ public class EquipoController {
     @PostMapping("/equipos/nuevo")
     public String nuevoEquipo(@ModelAttribute EquipoData equipoData, Model model) {
         equipoService.crearEquipo(equipoData.getNombre());
+        return "redirect:/equipos";
+    }
+
+    @PostMapping("/equipos/{id}/eliminar")
+    public String eliminarEquipo(@PathVariable(value = "id") Long idEquipo, Model model) {
+        equipoService.borrarEquipo(idEquipo);
+        return "redirect:/equipos";
+    }
+
+    @GetMapping("/equipos/{id}/cambiarNombre")
+    public String cambiarNombre(@PathVariable(value = "id") Long idEquipo, Model model) {
+        model.addAttribute("equipoId", idEquipo);
+        EquipoData data = new EquipoData();
+        data.setId(idEquipo);
+        model.addAttribute("equipoData", data);
+        return "cambiarNombre";
+    }
+
+    @PostMapping("/equipos/{id}/cambiarNombre")
+    public String cambiarNombreAction(@ModelAttribute EquipoData equipoData, @PathVariable(value = "id") Long idEquipo,
+            Model model) {
+        equipoService.cambiarNombre(idEquipo, equipoData.getNombre());
         return "redirect:/equipos";
     }
 }
