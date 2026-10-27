@@ -13,15 +13,32 @@
             <tr>
                 <th>Identificador</th>
                 <th>Nombre del equipo</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="equipo : ${equipos}">
                 <td th:text="${equipo.id}"></td>
                 <td><a th:text="${equipo.nombre}" th:href="@{/equipos/{id}(id=${equipo.id})}"></a></td>
+                <td>
+                    <form th:if="${equiposUsuario == null or !equiposUsuario.contains(equipo)}"
+                          th:action="@{/equipos/{id}/unirse(id=${equipo.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm" th:text='Unirse'></button>
+                    </form>
+
+                    <form th:if="${equiposUsuario != null and equiposUsuario.contains(equipo)}"
+                          th:action="@{/equipos/{id}/salir(id=${equipo.id})}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-sm" th:text='Salir'></button>
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>
+    <form method="post" th:action="@{/equipos/nuevo}" th:object="${equipoData}">
+        <input type="text" placeholder="Nombre del equipo" th:field="*{nombre}" required/>
+        <button>Crear un equipo</button>
+    </form>
+    
 </div>
 
 <div th:replace="fragments::javascript"/>

@@ -58,6 +58,23 @@ public class EquipoService {
     }
 
     @Transactional
+    public void quitarUsuarioDeEquipo(Long id, Long id1) {
+        Equipo equipo = equipoRepository.findById(id).orElse(null);
+        Usuario usuario = usuarioRepository.findById(id1).orElse(null);
+        if (equipo == null)
+            throw new EquipoServiceException("El equipo " + id + "no existe.");
+        if (usuario == null)
+            throw new EquipoServiceException("El usuario " + id1 + "no existe.");
+        equipo.getUsuarios().remove(usuario);
+        usuario.getEquipos().remove(equipo);
+    }
+
+    @Transactional
+    public void borrarUsuarioDeEquipo(Long id, Long id1) {
+        quitarUsuarioDeEquipo(id, id1);
+    }
+
+    @Transactional
     public void borrarUsuarioDeEquipo(Long equipoId, Long usuarioId) {
         Equipo equipo = equipoRepository.findById(equipoId).orElse(null);
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
