@@ -4,7 +4,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import madstodolist.dto.EquipoData;
 import madstodolist.dto.UsuarioData;
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
@@ -51,6 +50,26 @@ public class EquipoServiceTest {
         List<UsuarioData> usuarios = equipoService.usuariosEquipo(equipo.getId());
         assertThat(usuarios).hasSize(1);
         assertThat(usuarios.get(0).getEmail()).isEqualTo("user@ua");
+    }
+
+    @Test
+    public void borrarUsuarioDeEquipo() {
+        // GIVEN
+        // Un usuario y un equipo en la base de datos
+        UsuarioData usuario = new UsuarioData();
+        usuario.setEmail("user@ua");
+        usuario.setPassword("123");
+        usuario = usuarioService.registrar(usuario);
+        EquipoData equipo = equipoService.crearEquipo("Proyecto 1");
+        equipoService.añadirUsuarioAEquipo(equipo.getId(), usuario.getId());
+        // WHEN
+        // Borramos a un usuario del equipo
+        equipoService.borrarUsuarioDeEquipo(equipo.getId(), usuario.getId());
+
+        // THEN
+        // El usuario ya no pertenece al equipo
+        List<UsuarioData> usuarios = equipoService.usuariosEquipo(equipo.getId());
+        assertThat(usuarios).hasSize(0);
     }
 
     @Test

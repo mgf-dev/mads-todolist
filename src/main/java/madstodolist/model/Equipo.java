@@ -80,4 +80,9 @@ public class Equipo implements Serializable {
         this.getUsuarios().add(usuario);
         usuario.getEquipos().add(this);
     }
+
+    public void borrarUsuario(Usuario usuario) {
+        this.getUsuarios().remove(usuario);
+        usuario.getEquipos().remove(this);
+    }
 }
