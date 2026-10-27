@@ -73,6 +73,21 @@ public class EquipoServiceTest {
     }
 
     @Test
+    public void borrarEquipo() {
+        // GIVEN
+        // Un equipo en la base de datos
+        EquipoData equipo = equipoService.crearEquipo("Proyecto 1");
+        // WHEN
+        // Borramos un equipo
+        equipoService.borrarEquipo(equipo.getId());
+
+        // THEN
+        // El equipo ya no existe
+        List<EquipoData> equipos = equipoService.obtenerEquipos();
+        assertThat(equipos).hasSize(0);
+    }
+
+    @Test
     public void recuperarEquiposDeUsuario() {
         // GIVEN
         // Un usuario y dos equipos en la base de datos
